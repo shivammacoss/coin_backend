@@ -82,8 +82,16 @@ io.on('connection', (socket) => {
 // Make io accessible to routes
 app.set('io', io)
 
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}
+
 // Middleware
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json())
 
 // Connect to MongoDB
